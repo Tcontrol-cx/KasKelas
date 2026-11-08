@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5">
+  <meta name="theme-color" content="#fff1f5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
+  <title>KasKelas - Pengelolaan Uang Kas Kelas Modern</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Modular Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Theme follows the device preference; no browser storage is used. -->
+  <script>
+    (function(){
+      var pref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', pref);
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Top App Navigation -->
+  <header class="navbar">
+    <div class="wrap navbar-inner">
+      <div class="nav-brand" id="navBrand">
+        <div class="nav-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>
+        </div>
+        <div class="nav-title">KasKelas <span class="nav-badge">v2.0</span></div>
+      </div>
+      <div class="nav-actions">
+        <div class="nav-pills" id="homePills" style="display:none">
+          <button class="nav-pill on" data-ht="kelas">Kelas</button>
+          <button class="nav-pill" data-ht="share">Backup & Share</button>
+        </div>
+        <button class="nav-pill" id="btnOwner">Login Owner</button>
+        <button class="icon-btn" id="btnTheme" title="Ganti Tema (Terang / Gelap)" aria-label="Ganti Tema">
+          <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section id="hero" class="hero">
+    <div class="wrap" id="heroContent">
+      <div class="hero-eyebrow">Pengelolaan Kas Kelas Modern</div>
+      <h1>Uang Kas</h1>
+      <p class="sub">Memuat data kas kelas...</p>
+    </div>
+  </section>
+
+  <!-- Month & Section Tabs -->
+  <nav id="tabsbar" class="tabsbar" style="display:none">
+    <div class="wrap">
+      <div class="tabs-row" id="tabs"></div>
+      <div class="section-tabs" id="sectionTabs"></div>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main>
+    <div class="wrap" id="main">
+      <div class="card empty-state">Memuat data...</div>
+    </div>
+  </main>
+
+  <!-- Modal Dialog Container -->
+  <div class="modal-backdrop" id="mbg">
+    <div class="modal-box" id="mbox" role="dialog" aria-modal="true"></div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" style="display:none"></div>
+
+  <!-- Modular Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/helpers.js"></script>
+  <script src="js/neon-config.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/reports.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
