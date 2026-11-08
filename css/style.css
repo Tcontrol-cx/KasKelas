@@ -785,6 +785,16 @@ main {
 }
 .student-sub-badge.carry-in { background: var(--carry-light); color: var(--carry); }
 .student-sub-badge.carry-out { background: var(--warning-light); color: var(--warning); }
+.student-sub-badge.remaining {
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid var(--primary-border);
+}
+.student-sub-badge.remaining.paid {
+  background: var(--success-light);
+  color: var(--success-dark);
+  border-color: var(--success-border);
+}
 
 .student-right {
   display: flex;

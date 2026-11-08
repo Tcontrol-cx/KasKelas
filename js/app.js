@@ -129,6 +129,15 @@
     return Math.max(1, Number(c && c.monthlyDue) || Number(c && c.weeklyDue) || C.DEFAULT_DUE);
   }
 
+  function yearPaymentSummary(sid){
+    var totalDue = 0, totalPaid = 0;
+    for(var mi = 0; mi < C.BULAN.length; mi++){
+      totalDue += dueValue(mi);
+      totalPaid += Number(cur.payMap[mi] && cur.payMap[mi][sid]) || 0;
+    }
+    return {due: totalDue, paid: totalPaid, remaining: Math.max(0, totalDue - totalPaid)};
+  }
+
   function dueCap(mi){
     return dueValue(mi) * C.MAX_CHECKS;
   }
@@ -655,10 +664,16 @@
       var subs = [];
       if(e.carryIn > 0) subs.push('<span class="student-sub-badge carry-in">Bawaan ' + rp(e.carryIn) + ' dari bulan sebelumnya</span>');
       if(e.carryOut > 0) subs.push('<span class="student-sub-badge carry-out">Lebih ' + rp(e.carryOut) + ' ke bulan berikutnya</span>');
+      var yearPayment = yearPaymentSummary(s.id);
+      var annualText = yearPayment.remaining === 0
+        ? 'Terbayar ' + rp(yearPayment.paid) + ' dari ' + rp(yearPayment.due) + ' · Lunas sampai akhir tahun ajaran'
+        : 'Dibayar ' + rp(yearPayment.paid) + ' · Sisa ' + rp(yearPayment.remaining) + ' sampai akhir tahun ajaran';
+      subs.push('<span class="student-sub-badge remaining' + (yearPayment.remaining === 0 ? ' paid' : '') + '">' + annualText + '</span>');
 
       var isFull = e.shown >= due;
       var isPartial = e.shown > 0 && e.shown < due;
-      var statusBadge = isFull ? '<span class="student-status-badge lunas">Lunas</span>' : (isPartial ? '<span class="student-status-badge sebagian">Kurang ' + rp(due - e.shown) + '</span>' : '<span class="student-status-badge belum">Belum Bayar</span>');
+      var monthShort = C.BULAN[mi].slice(0, 3);
+      var statusBadge = isFull ? '<span class="student-status-badge lunas">Lunas (' + monthShort + ')</span>' : (isPartial ? '<span class="student-status-badge sebagian">Kurang ' + rp(due - e.shown) + '</span>' : '<span class="student-status-badge belum">Belum Bayar (' + monthShort + ')</span>');
 
       return '<div class="student-row' + (admin ? ' click' : '') + '" data-id="' + s.id + '" title="' + (admin ? 'Klik untuk mencatat pembayaran' : '') + '">'
         + '<div class="student-left">'
