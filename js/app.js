@@ -839,7 +839,8 @@
   function renderRecap(){
     var admin = cur.role === 'admin';
     var keep = null, f = document.querySelector('[data-notes]');
-    if(f){ keep = {m: f.dataset.notes, n: f.querySelector('.nn').value, a: f.querySelector('.na').value, t: f.querySelector('.nt') ? f.querySelector('.nt').value : 'out'}; }
+    var nameInput = f && f.querySelector('.nn'), amountInput = f && f.querySelector('.na');
+    if(nameInput && amountInput){ keep = {m: f.dataset.notes, n: nameInput.value, a: amountInput.value, t: f.querySelector('.nt') ? f.querySelector('.nt').value : 'out'}; }
 
     var g = {kas: 0, inn: 0, out: 0, saldo: 0};
     var rows = C.BULAN.map(function(_, i){
