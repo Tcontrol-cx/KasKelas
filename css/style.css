@@ -1438,6 +1438,7 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
 @media (max-width: 640px) {
   body {
     font-size: 14px;
+    overflow-x: clip;
   }
   .wrap {
     padding-left: max(14px, env(safe-area-inset-left, 0px));
@@ -1522,9 +1523,15 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
     top: 56px;
     padding: 8px 0 6px;
   }
+  .tabs-row {
+    scroll-snap-type: x proximity;
+    overscroll-behavior-x: contain;
+    padding: 3px 1px 5px;
+  }
   .tab {
     padding: 7px 12px;
     font-size: 12.5px;
+    scroll-snap-align: start;
   }
   .section-tabs {
     margin-top: 6px;
@@ -1535,6 +1542,9 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
     justify-content: center;
     text-align: center;
     font-size: 12.5px;
+    min-width: 0;
+    white-space: normal;
+    line-height: 1.25;
   }
 
   /* Cards & Layout */
@@ -1542,6 +1552,7 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
     padding: 16px;
     border-radius: 14px;
     margin-bottom: 12px;
+    min-width: 0;
   }
   .card-header {
     flex-direction: column;
@@ -1569,12 +1580,14 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
   }
   .stat-card {
     padding: 11px 12px;
+    min-width: 0;
   }
   .stat-card:nth-child(3) {
     grid-column: span 2;
   }
   .stat-value {
     font-size: clamp(17px, 4.5vw, 20px);
+    overflow-wrap: anywhere;
   }
 
   /* Filter Bar & Search */
@@ -1592,12 +1605,14 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
   .filter-pills {
     order: 2;
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 2px;
+    flex-wrap: wrap;
+    overflow: visible;
+    gap: 6px;
+    padding-bottom: 0;
   }
   .filter-pill {
-    flex-shrink: 0;
+    flex: 1 1 auto;
+    min-width: 0;
     padding: 5px 11px;
     font-size: 12px;
   }
@@ -1652,10 +1667,25 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
     min-height: 155px;
     padding: 18px;
   }
+  .class-card-top,
+  .class-card-bottom {
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .class-card-header {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .class-actions {
+    flex-wrap: wrap;
+  }
 
   /* Tables & Horizontal Scroll */
   .table-container {
+    max-width: 100%;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
     border-radius: 12px;
   }
@@ -1687,6 +1717,15 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
     grid-template-columns: 1fr;
     gap: 6px;
   }
+  .notes-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .note-name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
   .note-item {
     padding: 7px 9px;
   }
@@ -1702,6 +1741,8 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
     border-radius: 24px 24px 0 0;
     border-bottom: none;
     max-height: 88vh;
+    min-width: 0;
+    overflow-x: hidden;
     padding: 14px 18px calc(24px + env(safe-area-inset-bottom, 0px));
     animation: sheetSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -1758,27 +1799,40 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
 @media (max-width: 440px) {
   .student-row {
     display: grid;
-    grid-template-columns: 18px 34px 1fr auto;
-    grid-template-areas:
-      "num avatar info right"
-      "subs subs subs subs";
+    grid-template-columns: minmax(0, 1fr) max-content;
     align-items: center;
-    gap: 6px 10px;
+    gap: 8px;
     padding: 10px;
   }
-  .student-num { grid-area: num; }
-  .student-avatar { grid-area: avatar; }
-  .student-info { grid-area: info; min-width: 0; }
+  .student-left {
+    min-width: 0;
+    gap: 8px;
+  }
+  .student-info {
+    min-width: 0;
+    flex: 1;
+  }
   .student-right {
-    grid-area: right;
+    min-width: 0;
     flex-direction: column;
     align-items: flex-end;
-    gap: 3px;
+    gap: 4px;
+  }
+  .student-right > div[style] {
+    display: none;
+  }
+  .student-amount {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .student-amount-val {
+    overflow-wrap: anywhere;
   }
   .student-subs {
-    grid-area: subs;
-    margin-left: 28px;
-    margin-top: 2px;
+    gap: 4px;
+  }
+  .student-sub-badge {
+    white-space: normal;
   }
   .home-banner-stat {
     flex-direction: column;
@@ -1791,6 +1845,59 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
   }
   .stat-card:nth-child(3) {
     grid-column: span 1;
+  }
+}
+
+/* Narrow screens: keep page content inside the viewport and let controls wrap. */
+@media (max-width: 360px) {
+  .wrap {
+    padding-left: max(10px, env(safe-area-inset-left, 0px));
+    padding-right: max(10px, env(safe-area-inset-right, 0px));
+  }
+  .navbar-inner {
+    gap: 6px;
+  }
+  .nav-brand {
+    gap: 7px;
+  }
+  .nav-title {
+    font-size: 14px;
+  }
+  .nav-actions {
+    gap: 4px;
+  }
+  #btnOwner {
+    padding-left: 7px;
+    padding-right: 7px;
+    font-size: 11px;
+  }
+  .card {
+    padding: 12px;
+  }
+  .student-row {
+    gap: 6px;
+    padding: 9px;
+  }
+  .student-left {
+    gap: 6px;
+  }
+  .student-num {
+    width: 18px;
+  }
+  .student-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+  }
+  .student-right {
+    max-width: 106px;
+  }
+  .note-item {
+    flex-wrap: wrap;
+  }
+  .note-name {
+    min-width: 90px;
+    overflow-wrap: anywhere;
   }
 }
 

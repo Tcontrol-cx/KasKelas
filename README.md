@@ -26,7 +26,7 @@ KasKelas mencatat iuran dan transaksi per bulan, lalu menyimpan data kelas, sisw
 
    Pisahkan beberapa origin dengan koma. Neon menyediakan `DATABASE_URL` ke Function saat berjalan. `APP_ORIGIN` harus sama persis dengan alamat hosting website.
 
-6. Terapkan konfigurasi Neon dengan `npx neon@latest deploy --env .env.local`, lalu deploy Function beserta dua variabel lingkungan aplikasinya. Di PowerShell:
+6. Terapkan konfigurasi Neon dengan `sud`, lalu deploy Function beserta dua variabel lingkungan aplikasinya. Di PowerShell:
 
    ```powershell
    $vars = @{}
